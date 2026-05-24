@@ -39,14 +39,14 @@ const Corner = ({ flip = false, flipY = false }: { flip?: boolean; flipY?: boole
     <g fill="none">
       <path d="M5 115 Q5 5 115 5" stroke={COLORS.gold} strokeWidth="0.7" opacity="0.28" />
       <path d="M18 18 Q28 8 38 18 Q28 28 18 18Z" fill={COLORS.gold} opacity="0.65" />
-      <path d="M8 28 Q18 18 28 28 Q18 38 8 28Z"  fill={COLORS.gold} opacity="0.42" />
+      <path d="M8 28 Q18 18 28 28 Q18 38 8 28Z"   fill={COLORS.gold} opacity="0.42" />
       <path d="M28 8  Q38 18 28 28 Q18 18 28 8Z"  fill={COLORS.gold} opacity="0.42" />
       <path d="M38 18 Q46 12 54 18 Q46 28 36 24 Q42 22 38 18Z" fill={COLORS.gold} opacity="0.38" />
       <polygon points="18,18 20,14 22,18 26,18 23,21 24,25 18,23 12,25 13,21 10,18 14,18 16,14" fill={COLORS.gold} opacity="0.28" />
       <path d="M38 18 Q50 30 44 60" stroke={COLORS.gold} strokeWidth="0.9" opacity="0.38" fill="none" />
       <path d="M18 38 Q30 50 60 44" stroke={COLORS.gold} strokeWidth="0.9" opacity="0.33" fill="none" />
       <path d="M14 54 Q20 48 26 54 Q20 60 14 54Z" fill={COLORS.gold} opacity="0.38" />
-      <path d="M8 60 Q14 54 20 60 Q14 66 8 60Z"   fill={COLORS.gold} opacity="0.28" />
+      <path d="M8 60 Q14 54 20 60 Q14 66 8 60Z"    fill={COLORS.gold} opacity="0.28" />
       <ellipse cx="30" cy="34" rx="7" ry="2.8" fill={COLORS.light} opacity="0.38" transform="rotate(-48,30,34)" />
       <ellipse cx="36" cy="26" rx="6" ry="2.5" fill={COLORS.light} opacity="0.3"  transform="rotate(-70,36,26)" />
       <circle cx="34" cy="14" r="1.8" fill="#e8c97a" opacity="0.6" />
@@ -116,78 +116,7 @@ const FONTS = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { background: ${COLORS.darkest}; overflow-x: hidden; }
-  ::-webkit-scrollbar { width: 3px; }
-  ::-webkit-scrollbar-track { background: ${COLORS.deepest}; }
-  ::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.4); border-radius: 2px; }
-
-  @keyframes petalFall {
-    0%   { transform: translateY(-20px) rotate(0deg); opacity: 0; }
-    5%   { opacity: 0.5; }
-    90%  { opacity: 0.25; }
-    100% { transform: translateY(100vh) rotate(380deg); opacity: 0; }
-  }
-  @keyframes floatUp {
-    0%   { transform: translateY(100vh); opacity: 0; }
-    10%  { opacity: 0.5; }
-    100% { transform: translateY(-40px); opacity: 0; }
-  }
-  @keyframes shimmer {
-    0%   { background-position: -200% center; }
-    100% { background-position:  200% center; }
-  }
-  @keyframes pulseRing {
-    0%,100% { box-shadow: 0 0 0 0 ${COLORS.ring}; }
-    50%      { box-shadow: 0 0 0 12px rgba(201,168,76,0); }
-  }
-  @keyframes bounceY {
-    0%,100% { transform: translateX(-50%) translateY(0); }
-    50%      { transform: translateX(-50%) translateY(9px); }
-  }
-
-  .map-btn-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    width: 100%;
-  }
-  .map-btn {
-    display: flex; align-items: center; justify-content: center;
-    height: 42px; width: 100%;
-    font-family: Montserrat, sans-serif;
-    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
-    text-decoration: none; color: #e8c97a;
-    border: 1px solid rgba(201,168,76,0.38);
-    background: transparent; cursor: pointer;
-    transition: background 0.2s, border-color 0.2s;
-  }
-  .map-btn:hover { background: rgba(201,168,76,0.1); border-color: rgba(201,168,76,0.65); }
-
-  .action-btn-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px; width: 100%; max-width: 400px; margin: 0 auto;
-  }
-  .action-btn {
-    display: flex; align-items: center; justify-content: center;
-    gap: 7px; height: 46px; width: 100%;
-    font-family: Montserrat, sans-serif;
-    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-    text-decoration: none; color: #e8c97a;
-    border: 1px solid rgba(201,168,76,0.38);
-    background: transparent; cursor: pointer;
-    transition: background 0.2s, border-color 0.2s, color 0.2s;
-  }
-  .action-btn:hover { background: rgba(201,168,76,0.1); border-color: rgba(201,168,76,0.7); color: #f5dfa0; }
-
-  @media (max-width: 480px) {
-    .action-btn { height: 44px; font-size: 8px; letter-spacing: 2px; }
-    .map-btn    { height: 40px; font-size: 7.5px; }
-  }
-  @media (min-width: 1024px) {
-    .action-btn { height: 50px; font-size: 10px; letter-spacing: 3.5px; }
-    .map-btn    { height: 46px; font-size: 9px; }
-  }
-`
+  `
 
 const EnvelopeScreen = ({ onOpen }: { onOpen: () => void }) => {
   const [opening, setOpening] = useState(false)
@@ -303,7 +232,7 @@ const Card = () => (
     display: 'flex', 
     alignItems: 'center', 
     justifyContent: 'center', 
-    gap: 'clamp(12px, 3vw, 28px)', // Dynamically adjusts spacing based on screen size
+    gap: 'clamp(12px, 3vw, 28px)', 
     width: '100%',
     maxWidth: '600px',
     margin: '0 auto'
@@ -315,59 +244,58 @@ const Card = () => (
     fontSize: 'clamp(28px, 5vw, 52px)', 
     color: '#d4849a',
     lineHeight: 1,
-    paddingTop: '10px' // Slight alignment offset to complement the script font descenders
+    paddingTop: '10px' 
   }}>
     &
   </div>
   <ScriptName name="Sana" size="large" />
 </motion.div>
 
-      {/* NEW FEATURE: Editorial Arched Wedding Image Frame */}
-      <motion.div 
-        initial={{ opacity: 0, y: 30, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
-        style={{
-          position: 'relative',
-          width: 'clamp(200px, 50vw, 280px)',
-          height: 'clamp(280px, 70vw, 390px)',
-          margin: '32px auto 12px',
-          padding: '6px',
-          border: `1px solid rgba(201,168,76,0.35)`,
-          borderRadius: '200px 200px 4px 4px',
-          background: 'rgba(6,33,48,0.2)',
-          boxShadow: '0 20px 45px rgba(0,0,0,0.35)',
-          backdropFilter: 'blur(4px)',
-        }}
-      >
-        <div style={{
-          width: '100%',
-          height: '100%',
-          borderRadius: '194px 194px 2px 2px',
-          overflow: 'hidden',
-          position: 'relative'
-        }}>
-          <img 
-            src="public\bg-img-adil-sana.jpg" 
-            alt="Sana & Adhil" 
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'center 20%',
-              opacity: 0.92,
-            }}
-          />
-          {/* Elegant soft gradient overlay over photo edges */}
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            background: `linear-gradient(to bottom, transparent 60%, ${COLORS.darkest} 100%)`,
-            opacity: 0.4,
-            pointerEvents: 'none'
-          }} />
-        </div>
-      </motion.div>
+<motion.div 
+  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+  animate={{ opacity: 1, y: 0, scale: 1 }}
+  transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
+  style={{
+    position: 'relative',
+    width: 'clamp(200px, 50vw, 280px)',
+    height: 'clamp(280px, 70vw, 390px)',
+    margin: '32px auto 12px',
+    padding: '6px',
+    border: `1px solid rgba(201,168,76,0.35)`,
+    borderRadius: '200px 200px 4px 4px',
+    background: 'rgba(6,33,48,0.2)',
+    boxShadow: '0 20px 45px rgba(0,0,0,0.35)',
+    backdropFilter: 'blur(4px)',
+  }}
+>
+  <div style={{
+    width: '100%',
+    height: '100%',
+    borderRadius: '194px 194px 2px 2px',
+    overflow: 'hidden',
+    position: 'relative'
+  }}>
+    <img 
+  src="https://drive.google.com/uc?export=view&id=1c7WR0bVg4YUX_i_oNYmT8pb7HDkqS_Od"
+  alt="Sana & Adil" 
+  style={{
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    objectPosition: 'center 20%',
+    opacity: 0.92,
+  }}
+/>
+    {/* Elegant soft gradient overlay over photo edges */}
+    <div style={{
+      position: 'absolute',
+      inset: 0,
+      background: `linear-gradient(to bottom, transparent 60%, ${COLORS.darkest} 100%)`,
+      opacity: 0.4,
+      pointerEvents: 'none'
+    }} />
+  </div>
+</motion.div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
         style={{ fontFamily: 'Montserrat,sans-serif', fontSize: 'clamp(8px,1.6vw,10px)', letterSpacing: 8, color: 'rgba(232,201,122,0.45)', textTransform: 'uppercase', marginTop: 16 }}>
@@ -417,8 +345,8 @@ const Card = () => (
 
           <div className="map-btn-grid">
             {[
-              { label: 'Open in Maps',   href: 'https://maps.app.goo.gl/ZmPFAxwHUQCPZqT78' },
-              { label: 'Get Directions', href: 'https://www.google.com/maps/dir/?api=1&destination=Malabar+Avenue+Ramanattukara+Calicut+Kerala' },
+              { label: 'Open in Maps',   href: 'https://maps.google.com' },
+              { label: 'Get Directions', href: 'https://maps.google.com' },
             ].map(b => (
               <motion.a key={b.label} href={b.href} target="_blank" rel="noreferrer"
                 className="map-btn"
