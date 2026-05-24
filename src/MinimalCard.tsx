@@ -75,7 +75,6 @@ const Petals = () => (
   </div>
 )
 
-// Fixed: Corrected standard CSS linear gradient syntax and removed encodeURIComponent
 const GoldLine = () => (
   <div style={{ display: 'flex', alignItems: 'center', gap: 14, justifyContent: 'center', margin: '28px auto', width: '100%' }}>
     <div style={{ flex: 1, maxWidth: 100, height: 1, background: `linear-gradient(to right, transparent, ${COLORS.gold})` }} />
@@ -89,10 +88,9 @@ const InfoRow = ({ label, value, sub }: { label: string; value: string; sub?: st
     <div style={{ fontFamily: 'Montserrat,sans-serif', fontSize: 8, letterSpacing: 4, textTransform: 'uppercase', color: `rgba(201,168,76,0.5)`, marginBottom: 6 }}>{label}</div>
     <div style={{ fontFamily: '"Cormorant Garamond",serif', fontStyle: 'italic', fontSize: 'clamp(16px,3vw,21px)', color: '#e8c97a', letterSpacing: 1, lineHeight: 1.5 }}>{value}</div>
     {sub && <div style={{ fontFamily: 'Montserrat,sans-serif', fontSize: 10, letterSpacing: 2, color: 'rgba(232,201,122,0.55)', marginTop: 4 }}>{sub}</div>}
-   </div>
+  </div>
 )
 
-// Fixed: Removed encodeURIComponent from the inline CSS text gradient background properties
 const ScriptName = ({ name, size = 'large' }: { name: string; size?: 'large' | 'medium' }) => {
   const fs = size === 'large'
     ? 'clamp(62px,14vw,112px)'
@@ -221,7 +219,6 @@ const EnvelopeScreen = ({ onOpen }: { onOpen: () => void }) => {
           <polygon points="0,220 320,220 160,130"  fill={COLORS.medium} opacity="0.7" />
           <text x="160" y="188" fontFamily="Georgia,serif" fontSize="15" fill={COLORS.gold} textAnchor="middle" opacity="0.65">A ♥ S</text>
           
-          {/* Fixed: Replaced fragile SVG rotateX with scaleY animation for robust cross-browser flap fold */}
           <motion.polygon points="0,30 320,30 160,130" fill="url(#eF)"
             style={{ transformOrigin: '160px 30px' }}
             animate={opening ? { scaleY: -1 } : { scaleY: 1 }}
@@ -240,7 +237,6 @@ const EnvelopeScreen = ({ onOpen }: { onOpen: () => void }) => {
 
         <AnimatePresence>
           {opening && (
-            /* Fixed: Assigned x & y directly inside framer motion coordinate loops to keep absolute layout centered flawlessly */
             <motion.div 
               initial={{ x: "-50%", y: "-50%", opacity: 0 }} 
               animate={{ x: "-50%", y: "-135px", opacity: 1 }} 
@@ -270,7 +266,7 @@ const Card = () => (
     <Petals />
 
     {[
-      { style: { top: 0, left: 0 },     flip: false, flipY: false },
+      { style: { top: 0, left: 0 },    flip: false, flipY: false },
       { style: { top: 0, right: 0 },    flip: true,  flipY: false },
       { style: { bottom: 0, left: 0 },  flip: false, flipY: true  },
       { style: { bottom: 0, right: 0 }, flip: true,  flipY: true  },
@@ -297,12 +293,80 @@ const Card = () => (
       </motion.div>
 
       <motion.div initial={{ scaleY: 0, opacity: 0 }} animate={{ scaleY: 1, opacity: 1 }} transition={{ delay: 0.55, duration: 0.7 }}
-        style={{ width: 1, height: 44, background: `linear-gradient(to bottom,transparent,${COLORS.gold},transparent)`, margin: '14px auto' }} />
+  style={{ width: 1, height: 44, background: `linear-gradient(to bottom,transparent,${COLORS.gold},transparent)`, margin: '14px auto' }} />
 
-      <motion.div initial={{ opacity: 0, scale: 0.88 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.65, duration: 1 }}>
-        <ScriptName name="Adil" size="large" />
-        <div style={{ fontFamily: '"Pinyon Script",cursive', fontSize: 'clamp(28px,6vw,52px)', color: '#d4849a', margin: '0px 0' }}>&</div>
-        <ScriptName name="Sana" size="large" />
+<motion.div 
+  initial={{ opacity: 0, scale: 0.88 }} 
+  animate={{ opacity: 1, scale: 1 }} 
+  transition={{ delay: 0.65, duration: 1 }}
+  style={{ 
+    display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    gap: 'clamp(12px, 3vw, 28px)', // Dynamically adjusts spacing based on screen size
+    width: '100%',
+    maxWidth: '600px',
+    margin: '0 auto'
+  }}
+>
+  <ScriptName name="Adil" size="large" />
+  <div style={{ 
+    fontFamily: '"Pinyon Script",cursive', 
+    fontSize: 'clamp(28px, 5vw, 52px)', 
+    color: '#d4849a',
+    lineHeight: 1,
+    paddingTop: '10px' // Slight alignment offset to complement the script font descenders
+  }}>
+    &
+  </div>
+  <ScriptName name="Sana" size="large" />
+</motion.div>
+
+      {/* NEW FEATURE: Editorial Arched Wedding Image Frame */}
+      <motion.div 
+        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
+        style={{
+          position: 'relative',
+          width: 'clamp(200px, 50vw, 280px)',
+          height: 'clamp(280px, 70vw, 390px)',
+          margin: '32px auto 12px',
+          padding: '6px',
+          border: `1px solid rgba(201,168,76,0.35)`,
+          borderRadius: '200px 200px 4px 4px',
+          background: 'rgba(6,33,48,0.2)',
+          boxShadow: '0 20px 45px rgba(0,0,0,0.35)',
+          backdropFilter: 'blur(4px)',
+        }}
+      >
+        <div style={{
+          width: '100%',
+          height: '100%',
+          borderRadius: '194px 194px 2px 2px',
+          overflow: 'hidden',
+          position: 'relative'
+        }}>
+          <img 
+            src="src\assets\photo_2026-05-24_17-51-42.jpg" 
+            alt="Sana & Adhil" 
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center 20%',
+              opacity: 0.92,
+            }}
+          />
+          {/* Elegant soft gradient overlay over photo edges */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: `linear-gradient(to bottom, transparent 60%, ${COLORS.darkest} 100%)`,
+            opacity: 0.4,
+            pointerEvents: 'none'
+          }} />
+        </div>
       </motion.div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
@@ -417,7 +481,6 @@ export default function MinimalWeddingCard() {
   const [open, setOpen] = useState(false)
   return (
     <>
-      {/* Fixed: Used dangerouslySetInnerHTML for custom font stylesheets to bypass parsing issues */}
       <style dangerouslySetInnerHTML={{ __html: FONTS }} />
       <AnimatePresence mode="wait">
         {!open
