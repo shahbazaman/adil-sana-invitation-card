@@ -348,7 +348,7 @@ const Card = () => (
           position: 'relative'
         }}>
           <img 
-            src="src\assets\photo_2026-05-24_17-51-42.jpg" 
+            src="public\bg-img-adil-sana.jpg" 
             alt="Sana & Adhil" 
             style={{
               width: '100%',
