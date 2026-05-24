@@ -577,12 +577,12 @@ const Card = () => (
             {[
               {
                 label: "Open in Maps",
-                href: "https://maps.google.com",
+                href: "https://maps.app.goo.gl/ZmPFAxwHUQCPZqT78",
                 icon: "📍",
               },
               {
                 label: "Get Directions",
-                href: "https://maps.google.com",
+                href: "https://www.google.com/maps/dir/?api=1&destination=Malabar+Avenue+Ramanattukara+Calicut+Kerala",
                 icon: "🧭",
               },
             ].map((b) => (
@@ -637,13 +637,13 @@ const Card = () => (
             {
               icon: "📞",
               label: "Call Family",
-              href: "tel:+916282142322",
+              href: "tel:+918075094452",
             },
             {
               icon: "💬",
               label: "WhatsApp",
               href:
-                "https://wa.me/916282142322?text=Hi!%20I%20received%20your%20wedding%20invitation.",
+                "https://wa.me/918075094452?text=Hi!%20I%20received%20your%20wedding%20invitation.",
             },
           ].map((c) => (
             <motion.a
