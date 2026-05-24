@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-// Define a new color palette (Blue & Gold)
+// Define color palette (Blue & Gold)
 const COLORS = {
   deepest: '#062130',
   darkest: '#0a3147',
@@ -18,8 +18,84 @@ const COLORS = {
   ring: 'rgba(201,168,76,0.4)',
 }
 
-// Fixed: Keep encodeURIComponent ONLY for the SVG data string
 const PATTERN = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='${encodeURIComponent(COLORS.gold)}' stroke-width='0.6' opacity='0.13'%3E%3Cpolygon points='60,10 85,30 85,70 60,90 35,70 35,30'/%3E%3Cpolygon points='60,25 75,35 75,65 60,75 45,65 45,35'/%3E%3Cline x1='60' y1='10' x2='60' y2='0'/%3E%3Cline x1='85' y1='30' x2='120' y2='15'/%3E%3Cline x1='85' y1='70' x2='120' y2='85'/%3E%3Cline x1='60' y1='90' x2='60' y2='120'/%3E%3Cline x1='35' y1='70' x2='0' y2='85'/%3E%3Cline x1='35' y1='30' x2='0' y2='15'/%3E%3C/g%3E%3C/svg%3E")`
+
+// EMBEDDED STYLES WITH MOBILE RESPONSIVENESS & EXPLICIT BUTTON FIXES
+const FONTS = `
+  @import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: ${COLORS.darkest}; overflow-x: hidden; }
+
+  /* Grid Layouts for Buttons */
+  .map-btn-grid, .action-btn-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  /* Base Button Styling - Forces exact identical dimensions and visible styling */
+  .map-btn, .action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 260px; /* Limits size on desktop */
+    height: 46px;     /* Forces matching uniform height */
+    padding: 0 16px;
+    border: 1px solid ${COLORS.gold}88; /* Transparent gold border */
+    background-color: ${COLORS.darkest}88; /* Semi-transparent dark background */
+    color: #e8c97a;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Interactive States */
+  .map-btn:hover, .action-btn:hover {
+    background-color: ${COLORS.gold}22 !important;
+    border-color: ${COLORS.gold} !important;
+    color: #fff !important;
+    box-shadow: 0 6px 20px rgba(201, 168, 76, 0.2);
+  }
+
+  /* Responsiveness: Switch grids to horizontal rows on tablets and desktops */
+  @media (min-width: 480px) {
+    .map-btn-grid, .action-btn-grid {
+      flex-direction: row;
+      gap: 16px;
+    }
+    .map-btn, .action-btn {
+      flex: 1;
+      max-width: 180px; /* Uniform width when aligned side-by-side */
+    }
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(105vh) scale(0.8); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+  }
+  @keyframes petalFall {
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 0.8; }
+    100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+  }
+`
 
 const Arch = ({ op = 0.2 }: { op?: number }) => (
   <svg viewBox="0 0 300 70" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', opacity: op }}>
@@ -104,19 +180,11 @@ const ScriptName = ({ name, size = 'large' }: { name: string; size?: 'large' | '
       backgroundSize: '200% auto',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
-      animation: 'shimmer 3.5s linear infinite',
     }}>
       {name}
     </div>
   )
 }
-
-const FONTS = `
-  @import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap');
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { background: ${COLORS.darkest}; overflow-x: hidden; }
-  `
 
 const EnvelopeScreen = ({ onOpen }: { onOpen: () => void }) => {
   const [opening, setOpening] = useState(false)
@@ -128,9 +196,6 @@ const EnvelopeScreen = ({ onOpen }: { onOpen: () => void }) => {
       onClick={go}
       style={{ position: 'fixed', inset: 0, cursor: 'pointer', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: `radial-gradient(ellipse at center,${COLORS.dark} 0%,${COLORS.darkest} 60%,${COLORS.deepest} 100%)` }}>
       <div style={{ position: 'absolute', inset: 0, backgroundImage: PATTERN, backgroundSize: '120px 120px' }} />
-      {Array.from({ length: 14 }).map((_, i) => (
-        <div key={i} style={{ position: 'absolute', borderRadius: '50%', width: 3 + i % 4, height: 3 + i % 4, background: `rgba(201,168,76,${0.12 + (i % 4) * 0.07})`, left: `${(i * 7.1) % 100}%`, animation: `floatUp ${7 + i % 5}s ${i * 0.45}s linear infinite` }} />
-      ))}
       <Petals />
 
       <motion.div initial={{ scale: 0.75, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.9, ease: 'easeOut' }}
@@ -142,7 +207,6 @@ const EnvelopeScreen = ({ onOpen }: { onOpen: () => void }) => {
           </defs>
           <rect x="0" y="30" width="320" height="190" rx="5" fill="url(#eB)" />
           <line x1="24" y1="58" x2="296" y2="58" stroke={COLORS.gold} strokeWidth="0.6" opacity="0.4" />
-          <line x1="24" y1="62" x2="296" y2="62" stroke={COLORS.gold} strokeWidth="0.3" opacity="0.22" />
           <polygon points="0,30 160,130 0,220"     fill={COLORS.dark} opacity="0.6" />
           <polygon points="320,30 160,130 320,220" fill={COLORS.darkest} opacity="0.55" />
           <polygon points="0,220 320,220 160,130"  fill={COLORS.medium} opacity="0.7" />
@@ -153,29 +217,15 @@ const EnvelopeScreen = ({ onOpen }: { onOpen: () => void }) => {
             animate={opening ? { scaleY: -1 } : { scaleY: 1 }}
             transition={{ duration: 0.85, ease: [0.4, 0, 0.2, 1] }} />
           <line x1="0" y1="30" x2="320" y2="30" stroke={COLORS.gold} strokeWidth="0.7" opacity="0.5" />
-          <polygon points="155,28 160,22 165,28 160,34" fill={COLORS.gold} opacity="0.5" />
         </svg>
 
         <motion.div
           animate={opening ? { scale: 0, opacity: 0 } : { scale: 1, opacity: 1 }}
           transition={{ duration: 0.25 }}
           whileHover={{ scale: 1.1 }}
-          style={{ position: 'absolute', bottom: -14, left: '50%', transform: 'translateX(-50%)', width: 46, height: 46, borderRadius: '50%', background: 'radial-gradient(circle,#b05070,#6b1f35)', boxShadow: '0 4px 20px rgba(107,31,53,0.7)', animation: 'pulseRing 2s infinite', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, color: '#f5dfa0' }}>
+          style={{ position: 'absolute', bottom: -14, left: '50%', transform: 'translateX(-50%)', width: 46, height: 46, borderRadius: '50%', background: 'radial-gradient(circle,#b05070,#6b1f35)', boxShadow: '0 4px 20px rgba(107,31,53,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, color: '#f5dfa0' }}>
           ♥
         </motion.div>
-
-        <AnimatePresence>
-          {opening && (
-            <motion.div 
-              initial={{ x: "-50%", y: "-50%", opacity: 0 }} 
-              animate={{ x: "-50%", y: "-135px", opacity: 1 }} 
-              transition={{ duration: 0.7, delay: 0.45 }}
-              style={{ position: 'absolute', left: '50%', top: '50%', width: '76%', background: `linear-gradient(135deg,${COLORS.dark},${COLORS.darkest})`, border: '1px solid rgba(201,168,76,0.35)', padding: '16px 20px', textAlign: 'center', boxShadow: '0 8px 30px rgba(0,0,0,0.4)', pointerEvents: 'none' }}>
-              <div style={{ fontFamily: '"Cormorant Garamond",serif', fontSize: 14, letterSpacing: 3, color: '#e8c97a', textTransform: 'uppercase' }}>You are invited</div>
-              <div style={{ fontFamily: '"Pinyon Script",cursive', fontSize: 28, color: '#d4849a', marginTop: 4 }}>Adil & Sana</div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.div>
 
       <motion.p animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 2 }}
@@ -191,7 +241,6 @@ const Card = () => (
     style={{ background: `radial-gradient(ellipse at 50% 0%,${COLORS.dark} 0%,${COLORS.darkest} 55%,${COLORS.deepest} 100%)`, minHeight: '100vh', position: 'relative', overflowX: 'hidden' }}>
 
     <div style={{ position: 'fixed', inset: 0, backgroundImage: PATTERN, backgroundSize: '120px 120px', pointerEvents: 'none', zIndex: 0 }} />
-    <div style={{ position: 'fixed', inset: 0, background: 'radial-gradient(ellipse at 50% 30%,rgba(201,168,76,0.055) 0%,transparent 65%)', pointerEvents: 'none', zIndex: 0 }} />
     <Petals />
 
     {[
@@ -200,12 +249,12 @@ const Card = () => (
       { style: { bottom: 0, left: 0 },  flip: false, flipY: true  },
       { style: { bottom: 0, right: 0 }, flip: true,  flipY: true  },
     ].map((c, i) => (
-      <div key={i} style={{ position: 'fixed', width: 'clamp(70px,13vw,130px)', height: 'clamp(70px,13vw,130px)', opacity: 0.75, zIndex: 2, ...c.style }}>
+      <div key={i} style={{ position: 'fixed', width: 'clamp(50px,10vw,100px)', height: 'clamp(50px,10vw,100px)', opacity: 0.6, zIndex: 2, ...c.style }}>
         <Corner flip={c.flip} flipY={c.flipY} />
       </div>
     ))}
 
-    <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: 'clamp(60px,10vw,100px) clamp(24px,6vw,80px) clamp(70px,10vw,110px)' }}>
+    <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: 'clamp(40px,8vw,80px) clamp(16px,4vw,40px)' }}>
 
       <div style={{ width: '100%', maxWidth: 400, marginBottom: 8 }}>
         <Arch op={0.3} />
@@ -221,120 +270,46 @@ const Card = () => (
         Together with their families
       </motion.div>
 
-      <motion.div initial={{ scaleY: 0, opacity: 0 }} animate={{ scaleY: 1, opacity: 1 }} transition={{ delay: 0.55, duration: 0.7 }}
-  style={{ width: 1, height: 44, background: `linear-gradient(to bottom,transparent,${COLORS.gold},transparent)`, margin: '14px auto' }} />
+      <motion.div initial={{ opacity: 0, scale: 0.88 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.65, duration: 1 }}
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(12px, 3vw, 28px)', width: '100%', maxWidth: '600px', margin: '14px auto' }}>
+        <ScriptName name="Adil" size="large" />
+        <div style={{ fontFamily: '"Pinyon Script",cursive', fontSize: 'clamp(28px, 5vw, 52px)', color: '#d4849a', lineHeight: 1, paddingTop: '10px' }}>&</div>
+        <ScriptName name="Sana" size="large" />
+      </motion.div>
 
-<motion.div 
-  initial={{ opacity: 0, scale: 0.88 }} 
-  animate={{ opacity: 1, scale: 1 }} 
-  transition={{ delay: 0.65, duration: 1 }}
-  style={{ 
-    display: 'flex', 
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    gap: 'clamp(12px, 3vw, 28px)', 
-    width: '100%',
-    maxWidth: '600px',
-    margin: '0 auto'
-  }}
->
-  <ScriptName name="Adil" size="large" />
-  <div style={{ 
-    fontFamily: '"Pinyon Script",cursive', 
-    fontSize: 'clamp(28px, 5vw, 52px)', 
-    color: '#d4849a',
-    lineHeight: 1,
-    paddingTop: '10px' 
-  }}>
-    &
-  </div>
-  <ScriptName name="Sana" size="large" />
-</motion.div>
-
-<motion.div
-  initial={{ opacity: 0, y: 30, scale: 0.95 }}
-  animate={{ opacity: 1, y: 0, scale: 1 }}
-  transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
-  style={{
-    position: 'relative',
-    width: 'clamp(200px, 50vw, 280px)',
-    height: 'clamp(280px, 70vw, 390px)',
-    margin: '32px auto 12px',
-    padding: '6px',
-    border: `1px solid rgba(201,168,76,0.35)`,
-    borderRadius: '200px 200px 4px 4px',
-    background: 'rgba(6,33,48,0.2)',
-    boxShadow: '0 20px 45px rgba(0,0,0,0.35)',
-    backdropFilter: 'blur(4px)',
-    overflow: 'hidden',
-  }}
->
-  {/* Inner Image Container */}
-  <div
-    style={{
-      width: '100%',
-      height: '100%',
-      borderRadius: '194px 194px 2px 2px',
-      overflow: 'hidden',
-      position: 'relative',
-    }}
-  >
-    {/* Image */}
-    <img
-      src="/images/couple.jpg"
-      alt="Sana & Adil"
-      loading="eager"
-      draggable={false}
-      style={{
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-        objectPosition: 'center 20%',
-        opacity: 0.92,
-        display: 'block',
-        userSelect: 'none',
-      }}
-    />
-
-    {/* Gradient Overlay */}
-    <div
-      style={{
-        position: 'absolute',
-        inset: 0,
-        background: `
-          linear-gradient(
-            to bottom,
-            rgba(0,0,0,0.05) 0%,
-            rgba(0,0,0,0.08) 40%,
-            rgba(10,49,71,0.45) 100%
-          )
-        `,
-        pointerEvents: 'none',
-      }}
-    />
-
-    {/* Gold Glow */}
-    <div
-      style={{
-        position: 'absolute',
-        inset: 0,
-        boxShadow: 'inset 0 0 40px rgba(201,168,76,0.15)',
-        pointerEvents: 'none',
-      }}
-    />
-  </div>
-</motion.div>
-
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
-        style={{ fontFamily: 'Montserrat,sans-serif', fontSize: 'clamp(8px,1.6vw,10px)', letterSpacing: 8, color: 'rgba(232,201,122,0.45)', textTransform: 'uppercase', marginTop: 16 }}>
-        Wedding Invitation
+      {/* Static Public Folder Path Architecture Setup */}
+      <motion.div 
+        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ delay: 0.8, duration: 1.2 }}
+        style={{
+          position: 'relative',
+          width: 'clamp(180px, 45vw, 260px)',
+          height: 'clamp(250px, 62vw, 360px)',
+          margin: '24px auto 12px',
+          padding: '5px',
+          border: `1px solid rgba(201,168,76,0.35)`,
+          borderRadius: '200px 200px 4px 4px',
+          background: 'rgba(6,33,48,0.2)',
+          boxShadow: '0 20px 45px rgba(0,0,0,0.35)',
+          backdropFilter: 'blur(4px)',
+        }}
+      >
+        <div style={{ width: '100%', height: '100%', borderRadius: '194px 194px 2px 2px', overflow: 'hidden', position: 'relative' }}>
+          <img 
+            src="/wedding-photo.jpg" 
+            alt="Sana & Adil" 
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', opacity: 0.92 }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, transparent 60%, ${COLORS.darkest} 100%)`, opacity: 0.4, pointerEvents: 'none' }} />
+        </div>
       </motion.div>
 
       <GoldLine />
 
       <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.9 }}
-        style={{ width: '100%', maxWidth: 400 }}>
-        <div style={{ border: '1px solid rgba(201,168,76,0.28)', padding: 'clamp(24px,5vw,44px) clamp(18px,4vw,40px)', position: 'relative', background: COLORS.detailsBg, backdropFilter: 'blur(6px)' }}>
+        style={{ width: '100%', maxWidth: 440 }}>
+        <div style={{ border: '1px solid rgba(201,168,76,0.28)', padding: 'clamp(20px,4vw,36px) clamp(14px,3vw,30px)', position: 'relative', background: COLORS.detailsBg, backdropFilter: 'blur(6px)' }}>
 
           {[
             { top: 0,    left: 0,  borderWidth: '1px 0 0 1px' },
@@ -342,47 +317,43 @@ const Card = () => (
             { bottom: 0, left: 0,  borderWidth: '0 0 1px 1px' },
             { bottom: 0, right: 0, borderWidth: '0 1px 1px 0' },
           ].map((s, i) => (
-            <div key={i} style={{ position: 'absolute', width: 18, height: 18, borderColor: 'rgba(201,168,76,0.55)', borderStyle: 'solid', ...s }} />
+            <div key={i} style={{ position: 'absolute', width: 14, height: 14, borderColor: 'rgba(201,168,76,0.55)', borderStyle: 'solid', ...s }} />
           ))}
 
           <div style={{ marginBottom: 4 }}>
             <ScriptName name="Adil" size="medium" />
-            <div style={{ fontFamily: '"Cormorant Garamond",serif', fontStyle: 'italic', fontSize: 'clamp(12px,2vw,13px)', color: 'rgba(232,201,122,0.55)', letterSpacing: 1, marginTop: 4 }}>
+            <div style={{ fontFamily: '"Cormorant Garamond",serif', fontStyle: 'italic', fontSize: 'clamp(11px,2vw,13px)', color: 'rgba(232,201,122,0.55)', marginTop: 4 }}>
               Son of Mr. Aziz & Mrs. Soudha
             </div>
           </div>
 
-          <div style={{ fontFamily: '"Pinyon Script",cursive', fontSize: 'clamp(20px,4vw,30px)', color: '#d4849a', margin: '8px 0' }}>&</div>
+          <div style={{ fontFamily: '"Pinyon Script",cursive', fontSize: 'clamp(18px,3vw,26px)', color: '#d4849a', margin: '4px 0' }}>&</div>
 
-          <div style={{ marginBottom: 24 }}>
+          <div style={{ marginBottom: 20 }}>
             <ScriptName name="Sana" size="medium" />
-            <div style={{ fontFamily: '"Cormorant Garamond",serif', fontStyle: 'italic', fontSize: 'clamp(12px,2vw,13px)', color: 'rgba(232,201,122,0.55)', letterSpacing: 1, marginTop: 4 }}>
+            <div style={{ fontFamily: '"Cormorant Garamond",serif', fontStyle: 'italic', fontSize: 'clamp(11px,2vw,13px)', color: 'rgba(232,201,122,0.55)', marginTop: 4 }}>
               Daughter of Mr. Musthafa & Mrs. Suhra
             </div>
           </div>
 
-          <div style={{ width: '100%', height: 1, background: 'linear-gradient(to right,transparent,rgba(201,168,76,0.4),transparent)', marginBottom: 24 }} />
+          <div style={{ width: '100%', height: 1, background: 'linear-gradient(to right,transparent,rgba(201,168,76,0.3),transparent)', marginBottom: 20 }} />
 
           <InfoRow label="Date" value="Saturday, 6th June 2026" />
-          <div style={{ width: 40, height: 1, background: 'rgba(201,168,76,0.3)', margin: '18px auto' }} />
+          <div style={{ width: 30, height: 1, background: 'rgba(201,168,76,0.2)', margin: '14px auto' }} />
           <InfoRow label="Time" value="12:00 PM Onwards" />
-          <div style={{ width: 40, height: 1, background: 'rgba(201,168,76,0.3)', margin: '18px auto' }} />
+          <div style={{ width: 30, height: 1, background: 'rgba(201,168,76,0.2)', margin: '14px auto' }} />
           <InfoRow label="Venue" value="Malabar Avenue" sub="Ramanattukara, Calicut, Kerala" />
 
-          <div style={{ width: '100%', height: 1, background: 'linear-gradient(to right,transparent,rgba(201,168,76,0.4),transparent)', margin: '24px 0' }} />
+          <div style={{ width: '100%', height: 1, background: 'linear-gradient(to right,transparent,rgba(201,168,76,0.3),transparent)', margin: '20px 0' }} />
 
+          {/* Map Actions Grid Block */}
           <div className="map-btn-grid">
-            {[
-              { label: 'Open in Maps',   href: 'https://maps.google.com' },
-              { label: 'Get Directions', href: 'https://maps.google.com' },
-            ].map(b => (
-              <motion.a key={b.label} href={b.href} target="_blank" rel="noreferrer"
-                className="map-btn"
-                whileHover={{ background: 'rgba(201,168,76,0.1)', borderColor: 'rgba(201,168,76,0.65)' }}
-                whileTap={{ scale: 0.97 }}>
-                {b.label}
-              </motion.a>
-            ))}
+            <a href="https://maps.google.com/?q=Malabar+Avenue+Ramanattukara" target="_blank" rel="noreferrer" className="map-btn">
+              Open in Maps
+            </a>
+            <a href="https://maps.google.com/?daddr=Malabar+Avenue+Ramanattukara" target="_blank" rel="noreferrer" className="map-btn">
+              Get Directions
+            </a>
           </div>
         </div>
       </motion.div>
@@ -390,42 +361,33 @@ const Card = () => (
       <GoldLine />
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3 }}
-        style={{ maxWidth: 340, fontFamily: '"Cormorant Garamond",serif', fontStyle: 'italic', fontSize: 'clamp(14px,2.5vw,17px)', color: 'rgba(232,201,122,0.65)', lineHeight: 2, marginBottom: 8 }}>
-        "We joyfully request the honour of your presence<br />
-        as we begin this blessed journey together."
+        style={{ maxWidth: 340, fontFamily: '"Cormorant Garamond",serif', fontStyle: 'italic', fontSize: 'clamp(14px,2.5vw,16px)', color: 'rgba(232,201,122,0.65)', lineHeight: 1.8 }}>
+        "We joyfully request the honour of your presence as we begin this blessed journey together."
       </motion.div>
 
+      {/* Communications Actions Grid Block */}
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}
-        style={{ width: '100%', maxWidth: 400, marginTop: 24 }}>
+        style={{ width: '100%', maxWidth: 440, marginTop: 20 }}>
         <div className="action-btn-grid">
-          {[
-            { icon: '📞', label: 'Call Family', href: 'tel:+916282142322' },
-            { icon: '💬', label: 'WhatsApp',    href: 'https://wa.me/916282142322?text=Hi!%20I%20received%20your%20wedding%20invitation.' },
-          ].map(c => (
-            <motion.a key={c.label} href={c.href} target="_blank" rel="noreferrer"
-              className="action-btn"
-              whileHover={{ background: 'rgba(201,168,76,0.1)', borderColor: 'rgba(201,168,76,0.7)' }}
-              whileTap={{ scale: 0.97 }}>
-              <span style={{ fontSize: 16 }}>{c.icon}</span>
-              <span>{c.label}</span>
-            </motion.a>
-          ))}
+          <a href="tel:+916282142322" className="action-btn">
+            <span>📞</span> Call Family
+          </a>
+          <a href="https://wa.me/916282142322?text=Hi!%20I%20received%20your%20wedding%20invitation." target="_blank" rel="noreferrer" className="action-btn">
+            <span>💬</span> WhatsApp
+          </a>
         </div>
       </motion.div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
-        style={{ marginTop: 44, width: '100%' }}>
-        <div style={{ width: '100%', maxWidth: 300, margin: '0 auto 16px', transform: 'scaleY(-1)', opacity: 0.22 }}>
+        style={{ marginTop: 40, width: '100%' }}>
+        <div style={{ width: '100%', maxWidth: 260, margin: '0 auto 12px', transform: 'scaleY(-1)', opacity: 0.18 }}>
           <Arch op={1} />
         </div>
-        <div style={{ fontFamily: '"Pinyon Script",cursive', fontSize: 'clamp(26px,5vw,38px)', color: 'rgba(232,201,122,0.5)' }}>
+        <div style={{ fontFamily: '"Pinyon Script",cursive', fontSize: 'clamp(24px,4vw,34px)', color: 'rgba(232,201,122,0.5)' }}>
           With love & blessings
         </div>
-        <div style={{ fontFamily: '"Cormorant Garamond",serif', fontStyle: 'italic', fontSize: 14, color: 'rgba(201,168,76,0.3)', marginTop: 10, letterSpacing: 2 }}>
+        <div style={{ fontFamily: '"Cormorant Garamond",serif', fontStyle: 'italic', fontSize: 13, color: 'rgba(201,168,76,0.3)', marginTop: 8, letterSpacing: 2 }}>
           بارَكَ اللَّهُ لَكُمَا وَبارَكَ عَلَيْكُمَا
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 16 }}>
-          {[0,1,2].map(i => <div key={i} style={{ width: 7, height: 7, background: '#b05070', transform: 'rotate(45deg)', opacity: 0.5, borderRadius: 1 }} />)}
         </div>
       </motion.div>
 
