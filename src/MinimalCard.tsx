@@ -251,7 +251,7 @@ const Card = () => (
   <ScriptName name="Sana" size="large" />
 </motion.div>
 
-<motion.div 
+<motion.div
   initial={{ opacity: 0, y: 30, scale: 0.95 }}
   animate={{ opacity: 1, y: 0, scale: 1 }}
   transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
@@ -266,34 +266,62 @@ const Card = () => (
     background: 'rgba(6,33,48,0.2)',
     boxShadow: '0 20px 45px rgba(0,0,0,0.35)',
     backdropFilter: 'blur(4px)',
+    overflow: 'hidden',
   }}
 >
-  <div style={{
-    width: '100%',
-    height: '100%',
-    borderRadius: '194px 194px 2px 2px',
-    overflow: 'hidden',
-    position: 'relative'
-  }}>
-    <img 
-  src="https://drive.google.com/uc?export=view&id=1c7WR0bVg4YUX_i_oNYmT8pb7HDkqS_Od"
-  alt="Sana & Adil" 
-  style={{
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-    objectPosition: 'center 20%',
-    opacity: 0.92,
-  }}
-/>
-    {/* Elegant soft gradient overlay over photo edges */}
-    <div style={{
-      position: 'absolute',
-      inset: 0,
-      background: `linear-gradient(to bottom, transparent 60%, ${COLORS.darkest} 100%)`,
-      opacity: 0.4,
-      pointerEvents: 'none'
-    }} />
+  {/* Inner Image Container */}
+  <div
+    style={{
+      width: '100%',
+      height: '100%',
+      borderRadius: '194px 194px 2px 2px',
+      overflow: 'hidden',
+      position: 'relative',
+    }}
+  >
+    {/* Image */}
+    <img
+      src="/images/couple.jpg"
+      alt="Sana & Adil"
+      loading="eager"
+      draggable={false}
+      style={{
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        objectPosition: 'center 20%',
+        opacity: 0.92,
+        display: 'block',
+        userSelect: 'none',
+      }}
+    />
+
+    {/* Gradient Overlay */}
+    <div
+      style={{
+        position: 'absolute',
+        inset: 0,
+        background: `
+          linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.05) 0%,
+            rgba(0,0,0,0.08) 40%,
+            rgba(10,49,71,0.45) 100%
+          )
+        `,
+        pointerEvents: 'none',
+      }}
+    />
+
+    {/* Gold Glow */}
+    <div
+      style={{
+        position: 'absolute',
+        inset: 0,
+        boxShadow: 'inset 0 0 40px rgba(201,168,76,0.15)',
+        pointerEvents: 'none',
+      }}
+    />
   </div>
 </motion.div>
 
